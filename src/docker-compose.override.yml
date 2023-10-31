@@ -18,3 +18,21 @@ services:
       - catalogdb
     ports:
       - "8000:80"
+
+  basketcache:
+    container_name: basketcache
+    restart: always
+    ports:
+     - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  basket.api:
+    container_name: basket.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "CacheSettings:RedisConnectionString=localhost:6379"
+    depends_on:
+      - basketcache
+    ports:
+      - "8001:80"

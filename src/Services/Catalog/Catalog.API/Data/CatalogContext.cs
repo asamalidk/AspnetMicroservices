@@ -13,15 +13,6 @@ namespace Catalog.API.Data
             var database = client.GetDatabase(configuration.GetValue<string>("DatabaseSettings:DatabaseName"));
             Products = database.GetCollection<Product>(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
 
-            try
-            {
-                database.CreateCollection(configuration.GetValue<string>("DatabaseSettings:CollectionName"));
-            }
-            catch (MongoCommandException ex)
-            {
-                // Handle exception (e.g. collection already exists)
-            }
-
             CatalogContextSeed.SeedData(Products);
         }
 

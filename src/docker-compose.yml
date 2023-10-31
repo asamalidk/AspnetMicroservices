@@ -10,5 +10,15 @@ services:
       context: .
       dockerfile: Services/Catalog/Catalog.API/Dockerfile
 
+  basketcache:
+    image: redis
+
+  basket.api:
+    image: ${DOCKER_REGISTRY-}basketapi
+    build:
+      context: .
+      dockerfile: Services/Basket/Basket.API/Dockerfile
+
 volumes:
   mongo_data:
+  redis_data:  
